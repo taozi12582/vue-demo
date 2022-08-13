@@ -3,18 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!--解决闪烁问题-->
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
-<div id="app">
-
+<div id="vue" v-clock>
+    <div>{{info.name}}</div>
+    <div>{{info.address.street}}</div>
+    <a v-bind:href="info.url">点我</a>
 </div>
 
 <!--导入vue.js-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     var vm = new Vue({
-        el: "#app",
-        data: {}
+        el: "#vue",
+        data(){
+            return{
+                //请求的返回参数格式必须和json字符串一样
+                info:{
+                    name: null,
+                    address: {
+                        street: null,
+                        city: null,
+                        country:null
+                    },
+                    url:null
+                }
+            }
+        },
+        mounted(){//钩子函数 链式编程
+            axios.get('../data.json').then(response=>(this.info=response.data))
+        }
     })
 </script>
 </body>

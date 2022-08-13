@@ -7,26 +7,23 @@
 <body>
 
 <div id="app">
-
-    下拉框：
-    <select v-model="taozi">
-        <option disabled value="">请选择</option>
-        <option>A</option>
-        <option selected>B</option>
-        <option>C</option>
-        <option>D</option>
-    </select>
-
-    <span>value: {{taozi}}</span>
+    <!--组件：传递给组件中的值：props-->
+    <taozi v-for="item in items" v-bind:tao="item"></taozi>>
 </div>
 
 <!--导入vue.js-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
 <script>
+    //定义一个vue组件
+    Vue.component("taozi",{
+        props: ['tao'],
+        template: '<li>{{tao}}</li>'
+    });
+
     var vm = new Vue({
         el: "#app",
-        data: {
-            taozi: ""
+        data:{
+            items: ["Java", "Linux", "桃子"]
         }
     })
 </script>
